@@ -1,7 +1,6 @@
 package com.elite.gemini.chatbot.presentation
 
-import android.content.Context
-import android.content.SharedPreferences
+import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.elite.gemini.chatbot.data.Message
@@ -18,10 +17,10 @@ sealed class ChatUiState {
     data class Error(val message: String) : ChatUiState()
 }
 
-class ChatViewModel(private val appContext: Context) : ViewModel() {
+class ChatViewModel(application: Application) : ViewModel() {
     
     private val repository = ChatRepository()
-    private val sharedPreferences: SharedPreferences = appContext.getSharedPreferences("gemini_chat_prefs", Context.MODE_PRIVATE)
+    private val sharedPreferences = application.getSharedPreferences("gemini_chat_prefs", Application.MODE_PRIVATE)
     
     private val _uiState = MutableStateFlow<ChatUiState>(ChatUiState.Initial)
     val uiState: StateFlow<ChatUiState> = _uiState.asStateFlow()
@@ -94,6 +93,12 @@ class ChatViewModel(private val appContext: Context) : ViewModel() {
     fun clearChat() {
         _messages.value = emptyList()
         _uiState.value = ChatUiState.Initial
+    }
+    
+    fun dismissError() {
+        if (_uiState.value is ChatUiState.Error) {
+            _uiState.value = ChatUiState.Success(_messages.value)
+        }
     }
     
     private fun saveApiKey(key: String) {

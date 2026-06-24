@@ -5,21 +5,19 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.elite.gemini.chatbot.ui.theme.shimmerBase
 import com.elite.gemini.chatbot.ui.theme.shimmerHighlight
-import com.elite.gemini.chatbot.ui.theme.userMessageGradientEnd
-import com.elite.gemini.chatbot.ui.theme.userMessageGradientStart
 
+/**
+ * Animated typing indicator with three pulsing dots.
+ */
 @Composable
 fun TypingIndicator() {
     val infiniteTransition = rememberInfiniteTransition(label = "typing")
@@ -78,6 +76,9 @@ private fun Dot(alpha: Float) {
     }
 }
 
+/**
+ * Shimmer loading effect placeholder for content that is being loaded.
+ */
 @Composable
 fun ShimmerLoading() {
     val infiniteTransition = rememberInfiniteTransition(label = "shimmer")

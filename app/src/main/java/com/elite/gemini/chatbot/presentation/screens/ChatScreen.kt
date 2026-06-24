@@ -19,6 +19,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.elite.gemini.chatbot.ChatApplication
+import com.elite.gemini.chatbot.presentation.ChatUiState
 import com.elite.gemini.chatbot.presentation.ChatViewModel
 import com.elite.gemini.chatbot.presentation.components.ChatInput
 import com.elite.gemini.chatbot.presentation.components.ChatMessageItem
@@ -155,17 +156,21 @@ fun ChatScreen(
         }
         
         // Error Snackbar
-        viewModel.uiState.collectAsState().value.let { state ->
-            if (state is com.elite.gemini.chatbot.presentation.ChatUiState.Error) {
-                Snackbar(
-                    modifier = Modifier
-                        .align(Alignment.TopCenter)
-                        .padding(16.dp),
-                    containerColor = MaterialTheme.colorScheme.errorContainer,
-                    contentColor = MaterialTheme.colorScheme.onErrorContainer
-                ) {
-                    Text(state.message)
+        val uiState by viewModel.uiState.collectAsState()
+        if (uiState is ChatUiState.Error) {
+            Snackbar(
+                modifier = Modifier
+                    .align(Alignment.TopCenter)
+                    .padding(16.dp),
+                containerColor = MaterialTheme.colorScheme.errorContainer,
+                contentColor = MaterialTheme.colorScheme.onErrorContainer,
+                action = {
+                    TextButton(onClick = { viewModel.dismissError() }) {
+                        Text("Dismiss", color = MaterialTheme.colorScheme.onErrorContainer)
+                    }
                 }
+            ) {
+                Text((uiState as ChatUiState.Error).message)
             }
         }
     }
