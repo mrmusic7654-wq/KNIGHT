@@ -1,0 +1,46 @@
+```
+# Compiled and build artifacts
+*.class
+*.dex
+*.so
+*.aar
+*.apk
+*.jar
+
+# Dependencies
+.gradle/
+node_modules/
+vendor/
+
+# Build outputs
+build/
+intermediates/
+outputs/
+.externalNativeBuild/
+
+# Environment specific
+.env
+.env.local
+*.env.*
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*.tmp
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Coverage reports
+coverage/
+htmlcov/
+
+# Local configuration
+local.properties
+```
